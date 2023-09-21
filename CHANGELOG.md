@@ -1,5 +1,11 @@
 # dependex
 
+## 1.0.5
+
+### Patch Changes
+
+-   ca25972: Modify changeset access to public
+
 ## 1.0.4
 
 ### Patch Changes
