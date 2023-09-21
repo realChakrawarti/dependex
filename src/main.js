@@ -63,8 +63,6 @@ if (fs.existsSync(PACKAGE_JSON_PATH)) {
             for (let item of Object.entries(dependencies)) {
                 const data = await extractModuleInformation(item[0])
 
-
-
                 const {
                     name,
                     version,
@@ -74,23 +72,23 @@ if (fs.existsSync(PACKAGE_JSON_PATH)) {
                     dist,
                 } = data
 
-                content += `| ${name} | ${homepage} --- ${cleanURL(repository?.url)} | ${description} | ${
+                content += `| ${name ?? item[0]} | ${homepage ?? '-'} | ${cleanURL(repository?.url) ?? '-'} | ${description ?? '-'} | ${
                     item[1]
-                } | ${version} | ${formatProperSize(dist?.unpackedSize)} |\n`
+                } | ${version ?? '-'} | ${formatProperSize(dist?.unpackedSize)} |\n`
             }
             return content
         }
 
         const content = `
 # DEPENDENCIES
-| Package name | Homepage | Description | Installed version | Latest version | Size |
-| - | - | - | - | - | - |
+| Package name | Homepage | GitHub | Description | Installed version | Latest version | Size |
+| - | - | - | - | - | - | - |
 ${await dependencyString(data.dependencies)}
 
 
 # DEV-DEPENDENCIES
-| Package name | Homepage | Description | Installed version | Latest version | Size |
-| - | - | - | - | - | - |
+| Package name | Homepage | GitHub |Description | Installed version | Latest version | Size |
+| - | - | - | - | - | - | - |
 ${await dependencyString(data.devDependencies)}
         `
 
