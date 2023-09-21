@@ -1,6 +1,6 @@
 {
   "name": "dependex",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "description": "Extracts dependencies from package.json and outputs the list",
   "main": "src/main.js",
