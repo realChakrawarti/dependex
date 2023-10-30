@@ -23,3 +23,13 @@ Make use of:
 
 ## References:
 1. Read `package.json` from file-system: https://heynode.com/tutorial/readwrite-json-files-nodejs/
+2. Changeset: https://www.youtube.com/watch?v=puQYAhpfpkA
+3. Version and changelog: https://www.youtube.com/watch?v=BbdFfvZNWNw
+
+
+Feature list:
+
+1. Show table in terminal
+2. Column, upgrade available? ✅ or ❌
+3. Sortby upgrade availablity
+4. Output HTML to be open as live server: https://codesandbox.io/s/serverless-dew-yc4mp5?file=/src/App.js using markedjs
