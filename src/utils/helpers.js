@@ -13,7 +13,7 @@ export function formatProperSize(sizeInBytes) {
     if (size > 1000) {
         size = (size / 1000).toFixed(2) + Constants.MEGA_BYTE
     } else {
-        size += Constants.KILO_BYTE;
+        size += Constants.KILO_BYTE
     }
 
     return size
@@ -21,7 +21,7 @@ export function formatProperSize(sizeInBytes) {
 
 export function cleanURL(url) {
     if (url) {
-        return url.split("git+")[1]
+        return url.split('git+')[1]
     }
 }
 
@@ -37,11 +37,17 @@ export function readPackageJson(path, cb) {
 }
 
 export function compareBetweenVersion(currentVersion, latestVersion) {
-    const upgradeAvailable = compareVersions(
-        currentVersion.length > 12 ? '0' : currentVersion,
-        !latestVersion ? '0' : latestVersion,
-        '<='
-    )
+    let upgradeAvailable
+
+    try {
+        upgradeAvailable = compareVersions(
+            currentVersion.length > 12 ? '0' : currentVersion,
+            !latestVersion ? '0' : latestVersion,
+            '<='
+        )
+    } catch (err) {
+        upgradeAvailable = undefined
+    }
 
     if (upgradeAvailable) {
         return Constants.CHECK_ICON
@@ -51,20 +57,13 @@ export function compareBetweenVersion(currentVersion, latestVersion) {
 }
 
 export async function dependencyString(dependencies) {
-    const fetchSpinner = ora('Fetching package informations').start()
+    const fetchSpinner = ora('>').start()
     let content = ''
     for (let item of Object.entries(dependencies)) {
-        fetchSpinner.text = `> ${item[0]}`
+        fetchSpinner.text = `>> Fetching details: ${item[0]}`
         const data = await extractModuleInformation(item[0])
 
-        const {
-            name,
-            version,
-            description,
-            homepage,
-            repository,
-            dist,
-        } = data
+        const { name, version, description, homepage, repository, dist } = data
 
         content += `| ${name ?? item[0]} | ${
             homepage ?? Constants.NOT_AVAILABLE
@@ -72,10 +71,9 @@ export async function dependencyString(dependencies) {
             description ?? Constants.NOT_AVAILABLE
         } | ${item[1]} | ${
             version ?? Constants.NOT_AVAILABLE
-        } | ${compareBetweenVersion(
-            item[1],
-            version
-        )} | ${formatProperSize(dist?.unpackedSize)} |\n`
+        } | ${compareBetweenVersion(item[1], version)} | ${formatProperSize(
+            dist?.unpackedSize
+        )} |\n`
     }
     fetchSpinner.stop()
     return `
